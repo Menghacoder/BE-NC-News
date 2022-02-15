@@ -8,8 +8,10 @@ const db = require("../connection");
 const { dropTables, createTables } = require("../helpers/manage-tables");
 
 const seed = async ({ topicData, userData, articleData, commentData }) => {
+  
   await dropTables();
   await createTables();
+  
 
   const insertTopicsQueryStr = format(
     "INSERT INTO topics (slug, description) VALUES %L RETURNING *;",
@@ -67,7 +69,12 @@ const seed = async ({ topicData, userData, articleData, commentData }) => {
       ]
     )
   );
-  return db.query(insertCommentsQueryStr).then((result) => result.rows);
+  return db.query(insertCommentsQueryStr).then((result) => {
+    console.log("sucsess seeding")
+    //result.rows
+    return (result.rows)
+  });
+  
 };
 
 module.exports = seed;
