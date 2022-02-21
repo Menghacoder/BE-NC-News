@@ -15,7 +15,7 @@ return db
 }
 exports.updateArticleById = async(article_id, inc_vote) => {
 
-  try{
+  //try{
     const result = await db
     .query
     (`UPDATE articles 
@@ -27,10 +27,10 @@ exports.updateArticleById = async(article_id, inc_vote) => {
     console.log(result.rows[0]);
     return result.rows[0];
     
-  }
-  catch(error){ 
-    next(error)
-  }
+  //}
+  // catch(error){ 
+  //   next(error)
+  // }
   
   }
 

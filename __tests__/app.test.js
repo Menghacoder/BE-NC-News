@@ -89,18 +89,17 @@ describe('PATCH /api/articles/:article_id', () => {
             });
     });
 
-    // test.only('status: 400, respond with bad request if the vote is invalid', () =>{
-    //     const updatedVote = {
-    //          inc_vote: 'fifty'
-    //     };
-    //     return request(app)
-    //         .patch(`/api/articles/1`)
-    //         .send(updatedVote)
-    //         .expect(400)
-    //         .then(({body: { msg }}) => {
-    //             expect(msg).toBe("bad request");
-    //     });
-    //  });
+    test('status: 400, respond with bad request if the vote is invalid', () =>{
+        const updatedVote = {
+             inc_vote: 'fifty'
+        };
+        return request(app)
+            .patch(`/api/articles/1`)
+            .send(updatedVote)
+            .expect(400)
+            .then(({body: { msg }}) => {
+                expect(msg).toBe("bad request");
+        });
+     });
 
-    
 });

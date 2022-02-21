@@ -16,7 +16,7 @@ app.all('/*', (req, res) => {
     res.status(404).send({msg:'path not found'})
 })
 app.use((err, req, res, next) => {
-    if(err.code === "22P02" || err.code === '33502') res.status(400).send({msg: "bad request"});
+    if(err.code === "22P02" || err.code === '33502' || err.code === '23502') res.status(400).send({msg: "bad request"});
     next(err);
 })
 app.use((err,req,res,next) =>{
