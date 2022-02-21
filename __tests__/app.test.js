@@ -103,3 +103,24 @@ describe('PATCH /api/articles/:article_id', () => {
      });
 
 });
+
+// *********************************************************
+describe('app', ()=> {
+    describe('GET - /api/users', ()=> {
+        test('status: 200, responds with an array of users objects', () => {
+        return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then (({body: {users}}) => {
+            expect(users).toHaveLength(4);
+            users.forEach((user) => {
+                expect(user).toEqual(
+                    expect.objectContaining({
+                        username: expect.any(String),
+                    })              
+                 );            
+             });
+          });     
+       });
+    });
+});

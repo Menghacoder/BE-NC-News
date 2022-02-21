@@ -24,13 +24,10 @@ exports.updateArticleById = async(article_id, inc_vote) => {
     RETURNING* ;`,
     [inc_vote, article_id]
     ) 
-    console.log(result.rows[0]);
-    return result.rows[0];
-    
+    return result.rows[0]; 
   //}
   // catch(error){ 
   //   next(error)
   // }
-  
   }
 

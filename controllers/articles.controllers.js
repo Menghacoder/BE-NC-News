@@ -27,6 +27,6 @@ exports.patchArticleById = (req, res,next) => {
 
 
   .catch((error) => {
-    console.log(error), next(error)})
+    next(error)})
 };
 
