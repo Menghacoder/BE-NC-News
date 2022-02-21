@@ -3,6 +3,7 @@ const app = require('../app.js')
 const db = require('../db/connection')
 const seed = require('../db/seeds/seed.js')
 const testData = require('../db/data/test-data')
+const { idleTimeoutMillis } = require("pg/lib/defaults")
 //const articles = require("../db/data/test-data/articles.js")
 afterAll(() => {
     if(db.end) db.end();
@@ -73,3 +74,31 @@ describe('GET /api/articles/:article:id', () => {
      });
 
 })
+
+describe('PATCH /api/articles/:article_id', () => {
+    test('status:200, responds with the updated article (increminted vote)', () => {
+        const updatedVote = {
+            inc_vote: 50
+        };
+        return request(app)
+            .patch('/api/articles/1')
+            .send(updatedVote)
+            .expect(201)
+            .then((result) => {                                                                                                                                                                                                                                                               
+                expect(result.body.votes).toBe(150);
+            });
+    });
+
+    // test.only('status: 400, respond with bad request if the vote is invalid', () =>{
+    //     const updatedVote = {
+    //          inc_vote: 'fifty'
+    //     };
+    //     return request(app)
+    //         .patch(`/api/articles/1`)
+    //         .send(updatedVote)
+    //         .expect(400)
+    //         .then(({body: { msg }}) => {
+    //             expect(msg).toBe("bad request");
+    //     });
+    //  });
+});
