@@ -104,7 +104,6 @@ describe('PATCH /api/articles/:article_id', () => {
 
 });
 
-// *********************************************************
 describe('app', ()=> {
     describe('GET - /api/users', ()=> {
         test('status: 200, responds with an array of users objects', () => {
@@ -122,5 +121,18 @@ describe('app', ()=> {
              });
           });     
        });
+
+// **********************************************************
+test.only('status:404, respond with error path not found', () => {
+    return request (app)
+       .get ("/api/uses")
+       .expect(404)
+       .then(({body:{ msg }})=> {
+            expect(msg).toBe("path not found");
+       })
+
+ })
+
+
     });
 });
