@@ -3,7 +3,7 @@ const app = require('../app.js')
 const db = require('../db/connection')
 const seed = require('../db/seeds/seed.js')
 const testData = require('../db/data/test-data')
-const { idleTimeoutMillis } = require("pg/lib/defaults")
+// const { idleTimeoutMillis } = require("pg/lib/defaults")
 //const articles = require("../db/data/test-data/articles.js")
 afterAll(() => {
     if(db.end) db.end();
@@ -122,8 +122,7 @@ describe('app', ()=> {
           });     
        });
 
-// **********************************************************
-test.only('status:404, respond with error path not found', () => {
+test('status:404, respond with error path not found', () => {
     return request (app)
        .get ("/api/uses")
        .expect(404)
@@ -133,6 +132,84 @@ test.only('status:404, respond with error path not found', () => {
 
  })
 
+});
+});
+
+// **********************************************************
+
+
+describe('app', ()=> {
+    describe('GET - /api/articles', ()=> {
+        test('status: 200, responds with an array of articles objects', () => {
+        return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then (({body: {articles}}) => {
+            expect(articles).toHaveLength(12);
+            articles.forEach((article) => {
+                expect(article).toEqual(
+                    expect.objectContaining({
+                        //article_id: expect.any(Number),
+                        title: expect.any(String),
+                        topic: expect.any(String),
+                        author: expect.any(String),
+                        created_at: expect.any(String),
+                        votes: expect.any(Number),
+                    })              
+                 );            
+             });
+          });     
+       });
+
+       test('status:404, respond with error path not found', () => {
+        return request (app)
+           .get("/api/articleeeees")
+           .expect(404)
+           .then(({body:{ msg }})=> {
+                expect(msg).toBe("path not found");
+           }) 
+     })
+
+// ************************************************************************************** 
+// ************************************************************************************** 
+        // xtest("status: 200, articles are sorted by date, descending order", () => {
+        //     return request(app)
+        //     .get("/api/articles")
+        //     .expect(200)
+        //     .then(({body: {articles}})=>{
+        //         expect(articles).toBeSortedBy("created_at");
+        //     });
+        // });
+// ************************************************************************************** 
+// ************************************************************************************** 
+
+     test('status: 200, each article has comment_count property', () => {
+        return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then (({body: {articles}}) => {
+            console.log(articles[0], '<=========================')
+
+            expect(articles[0].comment_count).toBe("2");
+          });     
+       });
 
     });
 });
+
+
+// describe.only('app', ()=> {
+//     describe('GET - /api/articles', ()=> {
+//         test('status: 200, responds with an array of comments for the given `article_id`', () => {
+//         return request(app)
+//         .get("/api/articles")
+//         .expect(200)
+//         .then (({body: {articles}}) => {
+//             expect(articles[0].comment_count).toBe(11);
+//           });     
+//        });
+
+//     });
+// });
+
+
