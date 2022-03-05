@@ -170,42 +170,26 @@ describe('app', ()=> {
            }) 
      })
 
-// ************************************************************************************** 
-// ************************************************************************************** 
-        // xtest("status: 200, articles are sorted by date, descending order", () => {
-        //     return request(app)
-        //     .get("/api/articles")
-        //     .expect(200)
-        //     .then(({body: {articles}})=>{
-        //         expect(articles).toBeSortedBy("created_at");
-        //     });
-        // });
-// ************************************************************************************** 
-// ************************************************************************************** 
-
-     test('status: 200, each article has comment_count property', () => {
-        return request(app)
-        .get("/api/articles")
-        .expect(200)
-        .then (({body: {articles}}) => {
-            console.log(articles[0], '<=========================')
-
-            expect(articles[0].comment_count).toBe("2");
-          });     
-       });
-
-    });
-});
+// ----------------------------------- Not done ----------------------------------------------------------     
+        xtest("status: 200, articles are sorted by date, descending order", () => {
+            return request(app)
+            .get("/api/articles")
+            .expect(200)
+            .then(({body: {articles}})=>{
+                expect(articles).toBeSortedBy("created_at");
+            });
+        });
+// ------------------------------------------------------------------------------------------------------- 
 
 
-// describe.only('app', ()=> {
-//     describe('GET - /api/articles', ()=> {
-//         test('status: 200, responds with an array of comments for the given `article_id`', () => {
+//      test('status: 200, each article has comment_count property', () => {
 //         return request(app)
 //         .get("/api/articles")
 //         .expect(200)
 //         .then (({body: {articles}}) => {
-//             expect(articles[0].comment_count).toBe(11);
+//             console.log(articles[0], '<=========================')
+
+//             expect(articles[0].comment_count).toBe("2");
 //           });     
 //        });
 
@@ -213,3 +197,73 @@ describe('app', ()=> {
 // });
 
 
+// ----------------------------------- Not done ----------------------------------------------------------     
+
+// describe("/api/articles/:article_id/comments", () => {
+//     xtest("GET - status: 200, responds with all comments associated with the article_id in the query", () => {
+//       return request(app)
+//         .get(`/api/articles/2/comments`)
+//         .expect(200)
+//         .then(({ body: { comments } }) => {
+//           comments.forEach((comment) => {
+//             expect(comments.article_id).toBe(2);
+//             console.log(comment)
+//           });
+//         });
+//     });
+// });
+// ------------------------------------------------------------------------------------------------------- 
+
+
+
+// ----------------------------------- Not done ----------------------------------------------------------     
+// xdescribe("/api/articles/:article_id", () => {
+//     test("GET - status: 200, responds with an array containing the queried article, with a comment_count column added to it ", () => {
+//       const num = 3;
+//       return request(app)
+//         .get(`/api/articles/${num}`)
+//         .expect(200)
+//         .then(({ body: { article } }) => {
+//           expect(article[0]).toHaveProperty("comment_count");
+//           expect(article[0]).toMatchObject({
+//             article_id: 3,
+//             title: "Eight pug gifs that remind me of mitch",
+//             topic: "mitch",
+//             author: "icellusedkars",
+//             body: "some gifs",
+//             created_at: 1604394720000,
+//             votes: 0,
+//         });
+
+//      });
+
+// ----------------------------------- Not done ----------------------------------------------------------     
+
+
+   });
+});
+
+
+
+// RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+// RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+describe.only("/api/comments/:comment_id", () => {
+    test("DELETE - status: 204, should respond with no content after deleting a given comment (:comment_id)", () => {
+      return request
+        .agent(app)
+        .delete("/api/comments/1")
+        .expect(204)
+        .then(() => {
+          return request
+            .agent(app)
+            .delete("/api/comments/1")
+            .expect(404)
+            .then(({ body: { msg } }) => {
+              expect(msg).toEqual("Comment not found");
+            });
+        });
+    });
+ 
+  });
+// RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+// RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
